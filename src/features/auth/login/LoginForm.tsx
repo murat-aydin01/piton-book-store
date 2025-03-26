@@ -5,7 +5,7 @@ import Image from "next/image";
 
 function LoginForm() {
   return (
-    <div className="flex flex-col justify-between items-center my-20 h-full  w-[400px]">
+    <form className="flex flex-col justify-between items-center my-20 h-full  w-2/3">
       <div>
         <Image src="/Logo.png" alt="logo" width={120} height={78} />
       </div>
@@ -14,21 +14,21 @@ function LoginForm() {
         <p className="font-semibold text-2xl">Welcome back!</p>
         <p className="font-bold text-3xl">Login to your account</p>
       </div>
-      <div className="flex flex-col gap-y-20">
-        <div className="flex flex-col  gap-2">
+      <div className="flex flex-col w-full gap-y-20">
+        <div className="flex flex-col  gap-y-2">
           <div className="flex flex-col gap-y-10">
-            <FormInput id="email" type="text" />
-            <FormInput id="password" type="password" />
+            <FormInput name="E-mail" type="text" />
+            <FormInput name="Password" type="password" />
           </div>
-          <label><input type="checkbox" />Remember me</label>
+          <label className="text-[#6251DD] font-bold"><input className="mr-2 accent-[#6251DD] " type="checkbox" />Remember me</label>
         </div>
 
         <div className="flex flex-col gap-y-2">
-          <ButtonAuth variant="secondary">Login</ButtonAuth>
-          <ButtonAuth>Register</ButtonAuth>
+          <ButtonAuth>Login</ButtonAuth>
+          <ButtonAuth variant="secondary">Register</ButtonAuth>
         </div>
       </div>
-    </div>
+    </form>
   );
 }
 
