@@ -1,20 +1,27 @@
 "use client";
 
 import React from "react";
-import FormInput from "./components/FormInput";
-import ButtonAuth from "./components/ButtonAuth";
+import FormInput from "./FormInput";
+import ButtonAuth from "./ButtonAuth";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
-
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoginSchema, loginSchema, RegisterSchema, registerSchema } from "../utils/authSchema";
 type Props = {
   type: "login" | "register";
 };
 
 function AuthForm({ type }: Props) {
-  const {register, handleSubmit, formState:{errors}} = useForm({mode:"onChange"});
-  const onSubmit = () => {
 
+  const authSchema = type === "login" ? loginSchema : registerSchema;
+  
+
+  const {register, handleSubmit, formState:{errors}} = useForm<AuthSchema>({mode:"onChange", resolver:zodResolver(authSchema)});
+
+  const onSubmit = (data: AuthSchema) => {
+    console.log(data)
   }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-between items-center my-20 h-full  w-2/3">
       <div>
@@ -26,10 +33,9 @@ function AuthForm({ type }: Props) {
         <p className="font-bold text-3xl">Login to your account</p>
       </div>
       <div className="flex flex-col w-full gap-y-20">
-        <div className="flex flex-col  gap-y-2">
+        <div className="flex flex-col  gap-y-4">
           <div className="flex flex-col gap-y-10">
-            TODO: error props olarak gönder
-            {type === "register" && <FormInput  type="text" label="Name" register={register("name",{minLength:3})} error={errors.name?.message as string} />}
+            {type === "register" && <FormInput  type="text" label="Name" register={register("name",{minLength: { value: 3, message: "Name must be at least 3 characters" }})} error={errors.name?.message as string} />}
             <FormInput  type="text" label="E-mail" register={register("email")} error={errors.email?.message as string} />
             <FormInput  type="password" label="Password" register={register("password")} error={errors.password?.message as string} />
           </div>
@@ -43,12 +49,12 @@ function AuthForm({ type }: Props) {
           {type === "login" ? (
             <>
               <ButtonAuth>Login</ButtonAuth>
-              <ButtonAuth variant="secondary">Register</ButtonAuth>
+              <ButtonAuth type="button" variant="secondary">Register</ButtonAuth>
             </>
           ) : (
             <>
               <ButtonAuth>Register</ButtonAuth>
-              <ButtonAuth variant="secondary">Login</ButtonAuth>
+              <ButtonAuth type="button" variant="secondary">Login</ButtonAuth>
             </>
           )}
         </div>

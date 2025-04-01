@@ -1,4 +1,4 @@
-import AuthForm from "@/features/auth/AuthForm";
+import AuthForm from "@/features/auth/components/AuthForm";
 import React from "react";
 
 function page() {
