@@ -6,7 +6,8 @@ import ButtonAuth from "./ButtonAuth";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginSchema, loginSchema, RegisterSchema, registerSchema } from "../utils/authSchema";
+import {loginSchema, registerSchema } from "../utils/authSchema";
+import { z } from "zod";
 type Props = {
   type: "login" | "register";
 };
@@ -14,7 +15,8 @@ type Props = {
 function AuthForm({ type }: Props) {
 
   const authSchema = type === "login" ? loginSchema : registerSchema;
-  
+  type AuthSchema = z.infer<typeof loginSchema> | z.infer<typeof registerSchema>;
+
 
   const {register, handleSubmit, formState:{errors}} = useForm<AuthSchema>({mode:"onChange", resolver:zodResolver(authSchema)});
 
@@ -35,9 +37,9 @@ function AuthForm({ type }: Props) {
       <div className="flex flex-col w-full gap-y-20">
         <div className="flex flex-col  gap-y-4">
           <div className="flex flex-col gap-y-10">
-            {type === "register" && <FormInput  type="text" label="Name" register={register("name",{minLength: { value: 3, message: "Name must be at least 3 characters" }})} error={errors.name?.message as string} />}
-            <FormInput  type="text" label="E-mail" register={register("email")} error={errors.email?.message as string} />
-            <FormInput  type="password" label="Password" register={register("password")} error={errors.password?.message as string} />
+            {type === "register" && <FormInput  type="text" label="Name" register={register("name")} error={errors.name?.message} />}
+            <FormInput  type="text" label="E-mail" register={register("email")} error={errors.email?.message} />
+            <FormInput  type="password" label="Password" register={register("password")} error={errors.password?.message} />
           </div>
           {type === "register" &&<label className="text-[#6251DD] font-bold">
             <input className="mr-2 accent-[#6251DD] " type="checkbox" />
