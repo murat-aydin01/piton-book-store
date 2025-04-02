@@ -25,7 +25,7 @@ function AuthForm({ type }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-between items-center my-20 h-full  w-2/3">
+    <div className="flex flex-col justify-between items-center my-20 h-full  w-2/3">
       <div>
         <Image src="/Logo.png" alt="logo" width={120} height={78} />
       </div>
@@ -34,14 +34,14 @@ function AuthForm({ type }: Props) {
         <p className="font-semibold text-2xl">Welcome back!</p>
         <p className="font-bold text-3xl">Login to your account</p>
       </div>
-      <div className="flex flex-col w-full gap-y-20">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full gap-y-20">
         <div className="flex flex-col  gap-y-4">
           <div className="flex flex-col gap-y-10">
-            {type === "register" && <FormInput  type="text" label="Name" register={register("name")} error={errors.name?.message} />}
+            {type === "register" && <FormInput  type="text" label="Name" register={register("name")} error={'name' in errors ? errors.name?.message : undefined} />}
             <FormInput  type="text" label="E-mail" register={register("email")} error={errors.email?.message} />
             <FormInput  type="password" label="Password" register={register("password")} error={errors.password?.message} />
           </div>
-          {type === "register" &&<label className="text-[#6251DD] font-bold">
+          {type === "login" &&<label className="text-[#6251DD] font-bold">
             <input className="mr-2 accent-[#6251DD] " type="checkbox" />
             Remember me
           </label>}
@@ -60,8 +60,8 @@ function AuthForm({ type }: Props) {
             </>
           )}
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 }
 
