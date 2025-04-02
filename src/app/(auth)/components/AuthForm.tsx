@@ -6,22 +6,26 @@ import ButtonAuth from "./ButtonAuth";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {loginSchema, registerSchema } from "../utils/authSchema";
+import {loginSchema, RegisterSchema, registerSchema } from "../utils/authSchema";
 import { z } from "zod";
-type Props = {
-  type: "login" | "register";
-};
+import { login, register as apiRegister } from "@/app/services/api";
+import { useRouter } from "next/navigation";
+
+type Props = {type: "login" | "register"};
 
 function AuthForm({ type }: Props) {
-
+  const router = useRouter()
   const authSchema = type === "login" ? loginSchema : registerSchema;
   type AuthSchema = z.infer<typeof loginSchema> | z.infer<typeof registerSchema>;
+  const {register, handleSubmit, formState:{errors, isSubmitting}} = useForm<AuthSchema>({mode:"onChange", resolver:zodResolver(authSchema)});
 
-
-  const {register, handleSubmit, formState:{errors}} = useForm<AuthSchema>({mode:"onChange", resolver:zodResolver(authSchema)});
-
-  const onSubmit = (data: AuthSchema) => {
-    console.log(data)
+  const onSubmit = async (data: AuthSchema) => {
+    if(type==="login") {
+      await login(data)
+    }
+    if(type==="register") {
+      await apiRegister(data as RegisterSchema)
+    }
   }
 
   return (
@@ -46,17 +50,17 @@ function AuthForm({ type }: Props) {
             Remember me
           </label>}
         </div>
-
+{/* TODO buton disabled yapılacak */}
         <div className="flex flex-col gap-y-2">
           {type === "login" ? (
             <>
-              <ButtonAuth>Login</ButtonAuth>
-              <ButtonAuth type="button" variant="secondary">Register</ButtonAuth>
+              <ButtonAuth disabled={isSubmitting}>Login</ButtonAuth>
+              <ButtonAuth onClick={()=>{router.push("/register")}} type="button" variant="secondary">Register</ButtonAuth>
             </>
           ) : (
             <>
-              <ButtonAuth>Register</ButtonAuth>
-              <ButtonAuth type="button" variant="secondary">Login</ButtonAuth>
+              <ButtonAuth disabled={isSubmitting}>Register</ButtonAuth>
+              <ButtonAuth onClick={()=>{router.push("/login")}} type="button" variant="secondary">Login</ButtonAuth>
             </>
           )}
         </div>

@@ -2,13 +2,12 @@
 
 import React from "react";
 import { SWRConfig } from "swr";
-import fetcher from "./services/fetcher";
+import { fetcher } from "./services/api";
 
 function Providers({ children }: { children: React.ReactNode }) {
-  return <SWRConfig value={{
-    fetcher,
-    
-  }}>{children}</SWRConfig>;
+  return <SWRConfig value={{fetcher}}>
+      {children}
+    </SWRConfig>;
 }
 
 export default Providers;
