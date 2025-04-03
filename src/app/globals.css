@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+@layer components {
+    button:hover {
+      @apply cursor-pointer;
+    }
+  
+    button:disabled, 
+    button:disabled:hover {
+      @apply cursor-not-allowed opacity-50 bg-gray-400 text-gray-300;
+    }
+  }

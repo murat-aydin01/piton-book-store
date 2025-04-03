@@ -8,24 +8,40 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {loginSchema, RegisterSchema, registerSchema } from "../utils/authSchema";
 import { z } from "zod";
-import { login, register as apiRegister } from "@/app/services/api";
+import { login as apiLogin, register as apiRegister } from "@/app/services/api";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { login } from "@/app/store/authSlice";
+import { setToken } from "../utils/authLocalStorage";
 
 type Props = {type: "login" | "register"};
 
 function AuthForm({ type }: Props) {
   const router = useRouter()
+  const dispatch = useDispatch()
+
   const authSchema = type === "login" ? loginSchema : registerSchema;
   type AuthSchema = z.infer<typeof loginSchema> | z.infer<typeof registerSchema>;
   const {register, handleSubmit, formState:{errors, isSubmitting}} = useForm<AuthSchema>({mode:"onChange", resolver:zodResolver(authSchema)});
 
   const onSubmit = async (data: AuthSchema) => {
-    if(type==="login") {
-      await login(data)
+    if(type === "login") {
+      apiLogin(data).then(res=>{
+        const token = res.data.action_login.token
+        dispatch(login(token));
+        setToken(token)
+        router.push("/")
+      })
     }
-    if(type==="register") {
-      await apiRegister(data as RegisterSchema)
+    if(type === "register") {
+      apiRegister(data as RegisterSchema).then(res=>{
+        const token = res.data.action_register.token
+        dispatch(login(token));
+        setToken(token)
+        router.push("/")
+      })
     }
+    
   }
 
   return (
@@ -50,7 +66,6 @@ function AuthForm({ type }: Props) {
             Remember me
           </label>}
         </div>
-{/* TODO buton disabled yapılacak */}
         <div className="flex flex-col gap-y-2">
           {type === "login" ? (
             <>
