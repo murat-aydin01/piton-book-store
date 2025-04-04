@@ -10,15 +10,13 @@ import {loginSchema, RegisterSchema, registerSchema } from "../utils/authSchema"
 import { z } from "zod";
 import { login as apiLogin, register as apiRegister } from "@/app/services/api";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
-import { login } from "@/app/store/authSlice";
-import { setToken } from "../utils/authLocalStorage";
+import { useAuth } from "../hooks/useAuth";
 
 type Props = {type: "login" | "register"};
 
 function AuthForm({ type }: Props) {
   const router = useRouter()
-  const dispatch = useDispatch()
+  const {handleLogin, } = useAuth()
 
   const authSchema = type === "login" ? loginSchema : registerSchema;
   type AuthSchema = z.infer<typeof loginSchema> | z.infer<typeof registerSchema>;
@@ -26,20 +24,12 @@ function AuthForm({ type }: Props) {
 
   const onSubmit = async (data: AuthSchema) => {
     if(type === "login") {
-      apiLogin(data).then(res=>{
-        const token = res.data.action_login.token
-        dispatch(login(token));
-        setToken(token)
-        router.push("/")
-      })
+      const token = await apiLogin(data).then(res => res.data.action_login.token)
+      handleLogin(token)
     }
     if(type === "register") {
-      apiRegister(data as RegisterSchema).then(res=>{
-        const token = res.data.action_register.token
-        dispatch(login(token));
-        setToken(token)
-        router.push("/")
-      })
+      const token = await apiRegister(data as RegisterSchema).then(res => res.data.action_register.token)
+      handleLogin(token)
     }
     
   }
