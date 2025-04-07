@@ -1,5 +1,9 @@
+"use client";
+import Categories from "./components/Categories";
+
 export default function Home() {
+  
   return (
-    <div>ana sayfa</div>
+    <Categories />
   );
 }
