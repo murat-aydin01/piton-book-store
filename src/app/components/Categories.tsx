@@ -1,6 +1,7 @@
 import React from 'react'
 import { useCategories } from '../services/queries';
 import CategoryRaw from './CategoryRaw';
+import Link from 'next/link';
 
 function Categories() {
     const { categories, isLoading } = useCategories();
@@ -12,7 +13,7 @@ function Categories() {
           <div key={category.id} className="flex flex-col ">
             <div className="flex justify-between">
               <p className='text-[#090937] font-bold text-3xl'>{category.name}</p>
-              <p className='font-bold text-xl text-[#EF6B4A]'>Viev All</p>
+              <Link href={`/${category.id}`} className='font-bold text-xl text-[#EF6B4A]'>Viev All</Link>
             </div>
             <CategoryRaw id={Number(category.id)} />
           </div>
