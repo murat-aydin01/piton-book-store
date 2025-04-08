@@ -8,12 +8,13 @@ type Props = {
 
 function CategoryRaw({ id }: Props) {
   const { books, isLoading } = useBooks(id);
+  const sliced = books?.slice(0,3);
 
   if (isLoading) return <p>yükleniyor</p>;
   return (
-    <div className="flex gap-x-5 overflow-x-scroll ">
-      {books?.map((book: Book) => {
-        return <BookCard cover={book.cover} name={book.name} author={book.author} price={book.price.toString()} key={book.id} />;
+    <div className="flex gap-x-5 justify-around ">
+      {sliced?.map((book: Book) => {
+        return <BookCard variant="raw" cover={book.cover} name={book.name} author={book.author} price={book.price.toString()} key={book.id} />;
       })}
     </div>
   );
