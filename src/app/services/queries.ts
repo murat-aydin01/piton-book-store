@@ -1,26 +1,23 @@
 import useSWR from "swr";
-import { coverFethcer } from "./api";
+import { coverFetcher } from "./api";
 
-type Category = {
-  id: string;
-  name: string;
-  created_at: string;
-};
-
-type Categories = {
-  category: Category[];
-};
-
-export type Book = {
-  id: number;
-  name: string;
+export type BaseProduct = {
   author: string;
   cover: string;
-  created_at: string;
   description: string;
+  id: number;
+  name: string;
   price: number;
   sales: number;
   slug: string;
+};
+
+export type ProductByPk = BaseProduct & {
+  category_id: number;
+};
+
+export type ProductWithLikes = BaseProduct & {
+  created_at: string;
   likes_aggregate: {
     aggregate: {
       count: number;
@@ -28,9 +25,24 @@ export type Book = {
   };
 };
 
-type Books = {
-  product: Book[];
+export type ProductResponse = {
+  product_by_pk: ProductByPk;
 };
+
+export type ProductsResponse = {
+  product: ProductWithLikes[];
+};
+
+export type Category = {
+  id: string;
+  name: string;
+  created_at: string;
+};
+
+export type Categories = {
+  category: Category[];
+};
+
 
 export const useCategories = () => {
   const { data, error, isLoading } = useSWR<Categories>("/categories");
@@ -42,19 +54,28 @@ export const useCategories = () => {
 };
 
 export const useBooks = (id: number) => {
-  const { data, isLoading, error } = useSWR<Books>(`/products/${id}`);
+  const { data, isLoading, error } = useSWR<ProductsResponse>(`/products/${id}`);
   return {
     books: data?.product,
     error,
     isLoading,
-  }
+  };
+};
+
+export const useBook = (id: number) => {
+  const { data, isLoading, error } = useSWR<ProductResponse>(`/product/${id}`);
+  return {
+    book: data?.product_by_pk,
+    error,
+    isLoading,
+  };
 };
 
 export const useCoverImage = (fileName: string) => {
-    const {data, isLoading, error} = useSWR(fileName, coverFethcer)
-    return {
-        coverUrl: data,
-        error,
-        isLoading,
-    }
-}
+  const { data, isLoading, error } = useSWR(fileName, coverFetcher);
+  return {
+    coverUrl: data,
+    error,
+    isLoading,
+  };
+};
