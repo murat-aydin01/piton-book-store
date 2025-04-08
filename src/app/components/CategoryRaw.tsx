@@ -1,5 +1,5 @@
 import React from "react";
-import { Book, useBooks } from "../services/queries";
+import {  ProductWithLikes, useBooks } from "../services/queries";
 import BookCard from "./BookCard";
 
 type Props = {
@@ -13,8 +13,8 @@ function CategoryRaw({ id }: Props) {
   if (isLoading) return <p>yükleniyor</p>;
   return (
     <div className="flex gap-x-5 justify-around ">
-      {sliced?.map((book: Book) => {
-        return <BookCard variant="raw" cover={book.cover} name={book.name} author={book.author} price={book.price.toString()} key={book.id} />;
+      {sliced?.map((book: ProductWithLikes) => {
+        return <BookCard id={book.id.toString()} variant="raw" cover={book.cover} name={book.name} author={book.author} price={book.price.toString()} key={book.id} />;
       })}
     </div>
   );

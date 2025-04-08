@@ -1,7 +1,9 @@
 import React from "react";
 import { useCoverImage } from "../services/queries";
+import Link from "next/link";
 
 type Props = {
+  id: string;
   cover: string;
   name: string;
   author: string;
@@ -9,7 +11,7 @@ type Props = {
   variant: "raw" | "grid";
 };
 
-function BookCard({ cover, name, author, price, variant }: Props) {
+function BookCard({id, cover, name, author, price, variant }: Props) {
   const { coverUrl, isLoading } = useCoverImage(cover);
   if (isLoading) return <p>yükleniyor</p>;
 
@@ -31,6 +33,7 @@ function BookCard({ cover, name, author, price, variant }: Props) {
   const priceClasses = "font-bold text-2xl text-[#6251DD] text-nowrap";
 
   return (
+    <Link href={`/books/${id}`}> {/* TODO sayfa yapısını bozmadan tıklanabilir yap */}
     <div className={containerClasses}>
       <img className={imageClasses} src={coverUrl} alt={cover} />
       <div className={contentClasses}>
@@ -41,6 +44,7 @@ function BookCard({ cover, name, author, price, variant }: Props) {
         <p className={priceClasses}>{price} $</p>
       </div>
     </div>
+    </Link>
   );
 }
 
