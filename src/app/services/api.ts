@@ -3,7 +3,6 @@ import { LoginSchema, RegisterSchema } from "../(auth)/utils/authSchema";
 import { getToken, removeToken } from "../(auth)/utils/authLocalStorage";
 
 /* 
-TODO api cevabı için tip belirleme nasıl yapılır
 type LoginResponse = {
   action_login: {
     token: string

@@ -13,7 +13,7 @@ function Categories() {
           <div key={category.id} className="flex flex-col ">
             <div className="flex justify-between">
               <p className='text-[#090937] font-bold text-3xl'>{category.name}</p>
-              <Link href={`/${category.id}`} className='font-bold text-xl text-[#EF6B4A]'>Viev All</Link>
+              <Link href={`/categories/${category.id}`} className='font-bold text-xl text-[#EF6B4A]'>Viev All</Link>
             </div>
             <CategoryRaw id={Number(category.id)} />
           </div>

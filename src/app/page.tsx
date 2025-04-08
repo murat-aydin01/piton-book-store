@@ -1,9 +1,7 @@
-"use client";
-import Categories from "./components/Categories";
+import { redirect } from 'next/navigation'
 
-export default function Home() {
-  
-  return (
-    <Categories />
-  );
+function Redirect() {
+    redirect("/home")
 }
+
+export default Redirect

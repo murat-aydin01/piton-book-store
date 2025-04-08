@@ -1,6 +1,6 @@
 
 import React from 'react'
-import CategoryBooks from '../components/CategoryBooks'
+import CategoryBooks from '../../components/CategoryBooks'
 
 function page() {
     
