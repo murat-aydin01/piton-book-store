@@ -1,9 +1,9 @@
 import React from 'react'
-import { useCategories } from '../services/queries';
+import { useCategories } from '../../services/queries';
 import CategoryRaw from './CategoryRaw';
 import Link from 'next/link';
 
-function Categories() {
+function CategoryList() {
     const { categories, isLoading } = useCategories();
   if (isLoading) return <p>yükleniyor</p>;
   return (
@@ -23,4 +23,4 @@ function Categories() {
   )
 }
 
-export default Categories
+export default CategoryList

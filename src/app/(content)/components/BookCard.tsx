@@ -1,5 +1,5 @@
 import React from "react";
-import { useCoverImage } from "../services/queries";
+import { useCoverImage } from "../../services/queries";
 import Link from "next/link";
 
 type Props = {
@@ -22,8 +22,7 @@ function BookCard({id, cover, name, author, price, variant }: Props) {
 
   const imageClasses = variant === "raw" ? "" : "mb-3";
   
-  const contentClasses =
-    variant === "raw"
+  const contentClasses = variant === "raw"
       ? "flex flex-col items-start justify-between p-2.5 grow"
       : "flex justify-between w-full items-end";
 

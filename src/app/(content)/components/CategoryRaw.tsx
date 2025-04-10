@@ -1,5 +1,5 @@
 import React from "react";
-import {  ProductWithLikes, useBooks } from "../services/queries";
+import {  ProductWithLikes, useBooks } from "../../services/queries";
 import BookCard from "./BookCard";
 
 type Props = {

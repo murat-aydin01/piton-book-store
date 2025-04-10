@@ -1,5 +1,5 @@
 import React from 'react'
-import BookContent from '../components/BookContent'
+import BookContent from '../../components/BookContent'
 
 function Book() {
   return (
