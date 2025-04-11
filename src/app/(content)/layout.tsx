@@ -3,7 +3,7 @@ import Header from './components/Header'
 
 function ContentLayout({children}:{children:React.ReactNode}) {
   return (
-    <div className='flex flex-col gap-y-10 px-16 '>
+    <div className='flex flex-col gap-y-10 min-h-screen px-16 pb-10'>
       <Header/>
         {children}
     </div>

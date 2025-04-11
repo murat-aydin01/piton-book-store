@@ -2,10 +2,11 @@ import React from 'react'
 import { useCategories } from '../../services/queries';
 import CategoryRaw from './CategoryRaw';
 import Link from 'next/link';
+import Loading from '@/app/(auth)/components/Loading';
 
 function CategoryList() {
     const { categories, isLoading } = useCategories();
-  if (isLoading) return <p>yükleniyor</p>;
+  if (isLoading) return <Loading/>
   return (
     <div className="flex flex-col gap-y-16">
       {categories?.map((category) => {

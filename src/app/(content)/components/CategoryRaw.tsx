@@ -1,6 +1,7 @@
 import React from "react";
 import {  ProductWithLikes, useBooks } from "../../services/queries";
 import BookCard from "./BookCard";
+import Loading from "@/app/(auth)/components/Loading";
 
 type Props = {
   id: number;
@@ -10,7 +11,7 @@ function CategoryRaw({ id }: Props) {
   const { books, isLoading } = useBooks(id);
   const sliced = books?.slice(0,3);
 
-  if (isLoading) return <p>yükleniyor</p>;
+  if (isLoading) return <Loading/>
   return (
     <div className="grid grid-cols-3 grid-rows-[13rem] gap-x-10 justify-between ">
       {sliced?.map((book: ProductWithLikes) => {
