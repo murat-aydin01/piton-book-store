@@ -11,39 +11,31 @@ type Props = {
   variant: "raw" | "grid";
 };
 
-function BookCard({id, cover, name, author, price, variant }: Props) {
+function BookCard({ id, cover, name, author, price, variant }: Props) {
   const { coverUrl, isLoading } = useCoverImage(cover);
   if (isLoading) return <p>yükleniyor</p>;
 
-  const containerClasses =
-    variant === "raw"
-      ? "flex justify-between gap-x-5 p-2.5 min-w-80 w-1/4 h-52 bg-[#F4F4FF] border border-[#090937]/10 rounded-sm"
-      : "flex flex-col justify-between items-center p-5 bg-[#F4F4FF] border border-[#090937]/10 rounded-sm";
-
-  const imageClasses = variant === "raw" ? "" : "mb-3";
-  
-  const contentClasses = variant === "raw"
-      ? "flex flex-col items-start justify-between p-2.5 grow"
-      : "flex justify-between w-full items-end";
-
-  const textContainerClasses = "flex flex-col";
-  const nameClasses = "font-semibold text-xl text-[#090937]";
-  const authorClasses = "font-semibold text-[#090937]/60";
-  const priceClasses = "font-bold text-2xl text-[#6251DD] text-nowrap";
-
   return (
-    <Link href={`/books/${id}`}> {/* TODO sayfa yapısını bozmadan tıklanabilir yap */}
-    <div className={containerClasses}>
-      <img className={imageClasses} src={coverUrl} alt={cover} />
-      <div className={contentClasses}>
-        <div className={textContainerClasses}>
-          <p className={nameClasses}>{name}</p>
-          <p className={authorClasses}>{author}</p>
+    <div
+      className={`grid h-full justify-center gap-0 bg-[#F4F4FF] border border-[#090937]/10 rounded-sm 
+      ${
+        variant === "grid"
+          ? "grid-cols-[1fr_auto] grid-rows-subgrid row-span-3 p-5 "
+          : "grid-cols-2 grid-rows-[auto_auto_1fr] "
+      }`}
+    >
+      <div className={` ${variant === "grid" ? "col-span-2" : "row-span-3"}`}>
+        <img src={coverUrl} alt={cover} className="object-cover w-auto h-full place-self-center"/>
+      </div>
+      <div className={`grid  ${variant === "grid" ? "grid-cols-subgrid col-span-2" : "grid-rows-subgrid row-span-3"}`}>
+        <div className={`grid  ${variant === "grid" ? "grid-rows-subgrid row-span-2" : "grid-rows-subgrid row-span-2"}`}>
+          <p className="font-semibold text-xl text-[#090937] truncate">{name}</p>
+          <p className="font-semibold text-[#090937]/60 truncate">{author}</p>
         </div>
-        <p className={priceClasses}>{price} $</p>
+
+        <p className={`font-bold text-2xl text-[#6251DD] text-nowrap ${variant === "grid" ? "row-span-2 place-self-end" : "justify-start self-end"}`}>{price} $</p>
       </div>
     </div>
-    </Link>
   );
 }
 

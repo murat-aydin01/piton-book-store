@@ -12,7 +12,7 @@ function CategoryRaw({ id }: Props) {
 
   if (isLoading) return <p>yükleniyor</p>;
   return (
-    <div className="flex gap-x-5 justify-around ">
+    <div className="grid grid-cols-3 grid-rows-[13rem] gap-x-10 justify-between ">
       {sliced?.map((book: ProductWithLikes) => {
         return <BookCard id={book.id.toString()} variant="raw" cover={book.cover} name={book.name} author={book.author} price={book.price.toString()} key={book.id} />;
       })}

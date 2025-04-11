@@ -11,7 +11,7 @@ function CategoryBooks() {
 
     if(isLoading) return <p>yüklneiyor</p>
   return (
-    <div className='grid grid-cols-4 gap-10'>
+    <div className='grid md:grid-cols-3 lg:grid-cols-4 w-full h-auto gap-10'>
         {books?.map((book: ProductWithLikes)=>{
             return <BookCard id={book.id.toString()} variant='grid' cover={book.cover} name={book.name} author={book.author} price={book.price.toString()} key={book.id}/>
         })}
