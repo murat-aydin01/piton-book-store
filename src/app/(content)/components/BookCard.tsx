@@ -23,19 +23,17 @@ function BookCard({ id, cover, name, author, price, variant }: Props) {
         ${
           variant === "grid"
             ? "grid-cols-[1fr_auto] grid-rows-subgrid row-span-3 p-5 "
-            : "w-[13rem] md:w-[16rem] lg:w-auto grid-cols-[auto_1fr] grid-rows-[auto_auto_1fr] "
+            : "w-[13rem] md:w-[16rem] lg:w-auto lg:gap-x-10 grid-cols-[auto_1fr] grid-rows-[auto_auto_1fr] "
         }`}
       >
         <div className={` ${variant === "grid" ? "col-span-2" : "row-span-3"}`}>
           <img src={coverUrl} alt={cover} className="object-cover w-auto h-full place-self-center"/>
         </div>
-        <div className={`grid  ${variant === "grid" ? "grid-cols-subgrid col-span-2" : "grid-rows-subgrid row-span-3 py-5"}`}>
-          <div className={`grid  ${variant === "grid" ? "grid-rows-subgrid row-span-2" : "grid-rows-subgrid row-span-2"}`}>
-            <p className="font-semibold text-xl text-[#090937] truncate" title={name}>{name}</p>
-            <p className="font-semibold text-[#090937]/60 truncate" title={author}>{author}</p>
-          </div>
-          <p className={`font-bold text-2xl text-[#6251DD] text-nowrap ${variant === "grid" ? "row-span-2 place-self-end" : "justify-start self-end"}`}>{price} $</p>
-        </div>
+        <div className={`grid  ${variant === "grid" ? "grid-cols-subgrid col-span-2 grid-rows-subgrid row-span-2" : "grid-cols-1 grid-rows-subgrid row-span-3 py-5"}`}>          
+          <p className={`font-semibold text-lg lg:text-xl text-[#090937] truncate ${variant === "grid" ? "col-span-2" : ""}`} title={name}>{name}</p>
+          <p className="font-semibold text-sm lg:text-base text-[#090937]/60 truncate" title={author}>{author}</p>
+          <p className={`font-bold text-sm sm:text-xl lg:text-2xl text-[#6251DD] text-nowrap ${variant === "grid" ? " place-self-end" : "justify-start self-end"}`}>{price} $</p>
+       </div>
       </div>
     </Link>
   );
