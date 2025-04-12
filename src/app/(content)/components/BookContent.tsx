@@ -17,24 +17,23 @@ function BookContent() {
   if(isLoading) return <Loading/>
   if(!book) return <p>bulunamadı</p>
   return (
-    <div className='flex flex-col gap-y-10 w-full'>
+    <div className='flex flex-col  gap-y-10 w-full'>
       <ButtonBack label="Book Details" />
-      <div className='flex justify-between gap-x-20 relative'>
-        <img src={coverUrl} alt={book?.cover} className='p-14 bg-[#F4F4FF] border-[#090937]/10 rounded w-[26rem] h-[36rem] object-cover' />
-        <div className='flex flex-col justify-start gap-y-14 max-w-4xl'>
-          <div className='flex justify-between items-start w-auto'><div>
-            <p className='font-semibold text-4xl text-black text-nowrap'>{book?.name}</p>
-              <p className='font-semibold text-3xl text-black/60 text-nowrap'>{book?.author}</p>
+      <div className='flex flex-col items-center gap-y-10 lg:flex-row justify-between gap-x-20 relative'>
+        <img src={coverUrl} alt={book?.cover} className='bg-[#F4F4FF] border-[#090937]/10 rounded w-1/4 lg:w-[20rem] xl:w-[26rem] h-auto md:p-5 lg:p-14 object-cover' />
+        <div className='flex flex-col justify-start items-center lg:items-start gap-y-14 max-w-4xl'>
+          <div className='flex flex-col justify-between items-center gap-y-2.5 lg:items-start w-auto'>
+            <p className='font-semibold text-xl md:text-4xl text-black text-nowrap'>{book?.name}</p>
+            <p className='font-semibold text-base md:text-3xl text-black/60 text-nowrap'>{book?.author}</p>
           </div>
-          
+          <div className='flex flex-col items-center lg:items-start gap-y-2.5'>
+            <p className='font-bold text-xl md:text-2xl text-[#090937]'>Summary</p>
+            <p className='text-base md:text-xl text-[#090937]/60'>{book?.description}</p>
           </div>
-          <div className='flex flex-col'>
-            <p className='font-bold text-2xl text-[#090937]'>Summary</p>
-            <p className='text-xl text-[#090937]/60'>{book?.description}</p></div>
         </div>
         <Heart className='absolute top-0 right-0 h-11 w-11 bg-[#F4F4FF] rounded-full p-2.5 ' color='#6251DD'/>
       </div>
-      <ButtonBuy className='flex justify-between bg-[#EF6B4A] text-white text-xl rounded-sm mt-auto py-2.5 px-5 w-[400px] self-end  '><span className='font-bold'>{book.price} $</span><span className='font-semibold'>Buy Now</span></ButtonBuy>
+      <ButtonBuy className='flex justify-between bg-[#EF6B4A] text-white text-xl rounded-sm py-2.5 px-5 w-full  lg:w-[25rem] mt-auto self-end '><span className='font-bold'>{book.price} $</span><span className='font-semibold'>Buy Now</span></ButtonBuy>
     </div>
   )
 }
