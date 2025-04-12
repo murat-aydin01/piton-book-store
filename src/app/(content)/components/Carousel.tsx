@@ -7,7 +7,7 @@ type Props = {
 function Carousel({ images }: Props) {
   const [index, setIndex] = useState(0);
   return (
-    <div className="w-full h-[25rem] overflow-hidden relative">
+    <div className="w-full h-[25rem] overflow-hidden relative hidden md:block">
       <div
         className="flex w-full h-full ease-in-out duration-200"
         style={{ translate: `${-100 * index}%` }}

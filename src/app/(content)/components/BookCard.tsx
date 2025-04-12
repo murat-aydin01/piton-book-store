@@ -23,7 +23,7 @@ function BookCard({ id, cover, name, author, price, variant }: Props) {
         ${
           variant === "grid"
             ? "grid-cols-[1fr_auto] grid-rows-subgrid row-span-3 p-5 "
-            : "grid-cols-[auto_1fr] grid-rows-[auto_auto_1fr] "
+            : "w-[13rem] md:w-[16rem] lg:w-auto grid-cols-[auto_1fr] grid-rows-[auto_auto_1fr] "
         }`}
       >
         <div className={` ${variant === "grid" ? "col-span-2" : "row-span-3"}`}>
