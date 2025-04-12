@@ -35,7 +35,7 @@ function AuthForm({ type }: Props) {
   }
 
   return (
-    <div className="flex flex-col justify-between items-center my-20 h-full  w-2/3">
+    <div className="flex flex-col justify-between items-center my-10 md:my-20 h-full w-4/5 md:w-2/3">
       <div>
         <Image src="/Logo.png" alt="logo" width={120} height={78} />
       </div>
@@ -51,7 +51,7 @@ function AuthForm({ type }: Props) {
             <FormInput  type="text" label="E-mail" register={register("email")} error={errors.email?.message} />
             <FormInput  type="password" label="Password" register={register("password")} error={errors.password?.message} />
           </div>
-          {type === "login" &&<label className="text-[#6251DD] font-bold">
+          {type === "login" &&<label className="mt-2.5 text-[#6251DD] font-bold">
             <input className="mr-2 accent-[#6251DD] " type="checkbox" />
             Remember me
           </label>}
