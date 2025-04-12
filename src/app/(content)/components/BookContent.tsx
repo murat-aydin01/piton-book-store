@@ -17,7 +17,7 @@ function BookContent() {
   if(isLoading) return <Loading/>
   if(!book) return <p>bulunamadı</p>
   return (
-    <div className='flex flex-col gap-y-10 w-full h-full'>
+    <div className='flex flex-col gap-y-10 w-full'>
       <ButtonBack label="Book Details" />
       <div className='flex justify-between gap-x-20 relative'>
         <img src={coverUrl} alt={book?.cover} className='p-14 bg-[#F4F4FF] border-[#090937]/10 rounded w-[26rem] h-[36rem] object-cover' />

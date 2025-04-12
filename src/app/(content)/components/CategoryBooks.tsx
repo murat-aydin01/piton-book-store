@@ -15,7 +15,7 @@ function CategoryBooks() {
 
     if(isLoading) return <Loading/>
   return (
-    <div className='flex flex-col gap-y-10 w-full h-full'>
+    <div className='flex flex-col gap-y-10 w-full'>
       <ButtonBack label={categoryName?.name || "Kitaplar"}/>
       <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full h-auto gap-10'>
           {books?.map((book: ProductWithLikes)=>{
