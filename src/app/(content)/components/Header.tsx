@@ -28,7 +28,7 @@ function Header() {
   }, [isActive]);
 
   return (
-    <div className="flex items-center w-full h-30 relative">
+    <div className="flex items-center w-full h-auto mt-5 md:mt-0 md:h-30 relative">
       <div className="flex h-12 w-full justify-between gap-x-10">
         <img src="/Logo.png" alt="logo" className="hidden sm:block" />
         <SearchBar />
@@ -37,13 +37,13 @@ function Header() {
           <Heart className="bg-[#F4F4FF] h-full w-auto p-2.5 rounded-sm" />
           <ShoppingCart className="bg-[#F4F4FF] h-full w-auto p-2.5 rounded-sm" />
         </nav>
-        <div ref={menuButtonRef}>
-          <Menu  onClick={()=>{setIsActive(!isActive)}} className="block md:hidden h-full w-auto shrink-0" />
+        <div ref={menuButtonRef} className="block md:hidden">
+          <Menu  onClick={()=>{setIsActive(!isActive)}} className=" h-full w-auto shrink-0" />
         </div>
       </div>
 
 
-      <nav ref={menuRef} className={`absolute flex flex-col justify-start items-start px-2.5 gap-y-1 right-0 left-0 top-full w-full bg-[#F4F4FF] border-2 border-[#090937]/10 rounded-sm shadow-2xl  ${isActive ? "block" : "hidden"}`}>
+      <nav ref={menuRef} className={`absolute block md:hidden z-10 flex flex-col justify-start items-start px-2.5 gap-y-1 right-0 left-0 top-full w-full bg-[#F4F4FF] border-2 border-[#090937]/10 rounded-sm shadow-2xl transition-all transition-discrete duration-500 ${isActive ? "block opacity-100" : "hidden opacity-0"}`}>
         <div className="flex items-center">
           <User className="bg-[#F4F4FF] h-full w-auto p-2.5 rounded-sm " />
           <Link href={"/"}>Profile</Link>
