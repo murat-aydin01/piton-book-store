@@ -53,21 +53,30 @@ export const useCategories = () => {
   };
 };
 
-export const useBooks = (id: number) => {
-  const { data, isLoading, error } = useSWR<ProductsResponse>(`/products/${id}`);
+export const useBooks = (id: number | null) => {
+  const { data, isLoading, error, mutate } = useSWR<ProductsResponse>(id ? `/products/${id}` : null);
   return {
     books: data?.product,
     error,
     isLoading,
+    mutate
   };
 };
 
 export const useBook = (id: number) => {
-  const { data, isLoading, error } = useSWR<ProductResponse>(`/product/${id}`);
+  const { data, isLoading: productLoading, error } = useSWR<ProductResponse>(`/product/${id}`);
+  const categoryId = data?.product_by_pk.category_id
+
+  const {books, isLoading: productsLoading, mutate} = useBooks(categoryId as number)
+  const matchedBook = books?.find((book: ProductWithLikes)=>book.id === id)
+  const isLiked = matchedBook?.likes_aggregate.aggregate.count
+  
   return {
     book: data?.product_by_pk,
+    isLiked,
     error,
-    isLoading,
+    isLoading: productLoading || productsLoading,
+    mutate,
   };
 };
 

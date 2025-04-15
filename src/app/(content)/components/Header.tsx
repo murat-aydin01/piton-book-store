@@ -30,7 +30,7 @@ function Header() {
   return (
     <div className="flex items-center w-full h-auto mt-5 md:mt-0 md:h-30 relative">
       <div className="flex h-12 w-full justify-between gap-x-10">
-        <img src="/Logo.png" alt="logo" className="hidden sm:block" />
+        <Link href={"/home"} className="contents"><img src="/Logo.png" alt="logo" className="hidden sm:block" /></Link>
         <SearchBar />
         <nav className="hidden md:flex md:gap-x-4">
           <User className="bg-[#F4F4FF] h-full w-auto p-2.5 rounded-sm " />
@@ -43,7 +43,7 @@ function Header() {
       </div>
 
 
-      <nav ref={menuRef} className={`absolute block md:hidden z-10 flex flex-col justify-start items-start px-2.5 gap-y-1 right-0 left-0 top-full w-full bg-[#F4F4FF] border-2 border-[#090937]/10 rounded-sm shadow-2xl transition-all transition-discrete duration-500 ${isActive ? "block opacity-100" : "hidden opacity-0"}`}>
+      <nav ref={menuRef} className={`absolute md:hidden z-10 flex flex-col justify-start items-start px-2.5 gap-y-1 right-0 left-0 top-full w-full bg-[#F4F4FF] border-2 border-[#090937]/10 rounded-sm shadow-2xl transition-all transition-discrete duration-500 ${isActive ? "block opacity-100" : "hidden opacity-0"}`}>
         <div className="flex items-center">
           <User className="bg-[#F4F4FF] h-full w-auto p-2.5 rounded-sm " />
           <Link href={"/"}>Profile</Link>
