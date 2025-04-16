@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import React from "react";
-import { useBook, useCoverImage } from "../../services/queries";
+import { useBook, useBooks, useCoverImage } from "../../services/queries";
 import { Heart } from "lucide-react";
 import ButtonBuy from "./ButtonBuy";
 import ButtonBack from "./ButtonBack";
@@ -13,7 +13,8 @@ import { getTokenId } from "@/app/(auth)/utils/authLocalStorage";
 function BookContent() {
   const path = usePathname();
   const id = Number(path.split("/").pop());
-  const { book, isLiked, isLoading, mutate } = useBook(id);
+  const { book, isLiked, isLoading, mutate:bookMutate } = useBook(id);
+  const {mutate:booksMutate} = useBooks()
   const { coverUrl } = useCoverImage(`${book?.cover}`);
   const { trigger: like } = useSWRMutation("/like", likeFetcher);
   const { trigger: unlike } = useSWRMutation("/unlike", likeFetcher);
@@ -22,9 +23,9 @@ function BookContent() {
   const handleLike = () => {
     if (typeof user_id !== "number") return;
     if (isLiked) {
-      unlike({ user_id, product_id: id },{onSuccess: () => {mutate()}})} 
+      unlike({ user_id, product_id: id },{onSuccess: () => {bookMutate(); booksMutate()}})} 
       else {
-      like({ user_id, product_id: id },{onSuccess: () => {mutate()}});
+      like({ user_id, product_id: id },{onSuccess: () => {bookMutate(); booksMutate()}});
     }};
 
   if (isLoading) return <Loading />;
