@@ -1,5 +1,5 @@
 import React from "react";
-import {  ProductWithLikes, useBooks } from "../../services/queries";
+import {  ProductWithLikes, useCategoryBooks } from "../../services/queries";
 import BookCard from "./BookCard";
 import Loading from "@/app/(auth)/components/Loading";
 
@@ -8,7 +8,7 @@ type Props = {
 };
 
 function CategoryRaw({ id }: Props) {
-  const { books, isLoading } = useBooks(id);
+  const { books, isLoading } = useCategoryBooks(id);
   const sliced = books?.slice(0,3);
 
   if (isLoading) return <Loading/>

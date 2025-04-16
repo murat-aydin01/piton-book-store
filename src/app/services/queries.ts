@@ -53,7 +53,7 @@ export const useCategories = () => {
   };
 };
 
-export const useBooks = (id: number | null) => {
+export const useCategoryBooks = (id: number | null) => {
   const { data, isLoading, error, mutate } = useSWR<ProductsResponse>(id ? `/products/${id}` : null);
   return {
     books: data?.product,
@@ -63,11 +63,21 @@ export const useBooks = (id: number | null) => {
   };
 };
 
+export const useBooks = () => {
+  const {data, isLoading, error, mutate} = useSWR<ProductsResponse>("/products")
+  return {
+    books: data?.product,
+    isLoading,
+    mutate,
+    error
+  }
+}
+
 export const useBook = (id: number) => {
   const { data, isLoading: productLoading, error } = useSWR<ProductResponse>(`/product/${id}`);
   const categoryId = data?.product_by_pk.category_id
 
-  const {books, isLoading: productsLoading, mutate} = useBooks(categoryId as number)
+  const {books, isLoading: productsLoading, mutate} = useCategoryBooks(categoryId as number)
   const matchedBook = books?.find((book: ProductWithLikes)=>book.id === id)
   const isLiked = matchedBook?.likes_aggregate.aggregate.count
   

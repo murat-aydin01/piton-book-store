@@ -1,7 +1,7 @@
 "use client"
 import { usePathname } from 'next/navigation'
 import React from 'react'
-import {Category, ProductWithLikes, useBooks, useCategories } from '../../services/queries'
+import {Category, ProductWithLikes, useCategoryBooks, useCategories } from '../../services/queries'
 import BookCard from './BookCard';
 import ButtonBack from './ButtonBack';
 import Loading from '@/app/(auth)/components/Loading';
@@ -9,7 +9,7 @@ import Loading from '@/app/(auth)/components/Loading';
 function CategoryBooks() {
     const path = usePathname()
     const id = Number(path.split('/').pop());
-    const {books, isLoading} = useBooks(id)
+    const {books, isLoading} = useCategoryBooks(id)
     const {categories} = useCategories()
     const categoryName = categories?.find((category: Category)=> Number(category.id) == id)
 
