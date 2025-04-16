@@ -6,8 +6,7 @@ import ButtonBack from '../components/ButtonBack';
 import Loading from '@/app/(auth)/components/Loading';
 
 function Favorites() {
-    const {books, isLoading, mutate} = useBooks();
-    const favoriteBooks = books?.filter((book:ProductWithLikes)=>book.likes_aggregate.aggregate.count===1)
+    const {favoriteBooks, isLoading, mutate} = useBooks();
 
   if(isLoading) return <Loading/>
   return (

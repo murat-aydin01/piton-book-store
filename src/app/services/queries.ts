@@ -65,8 +65,10 @@ export const useCategoryBooks = (id: number | null) => {
 
 export const useBooks = () => {
   const {data, isLoading, error, mutate} = useSWR<ProductsResponse>("/products")
+  const favoriteBooks = data?.product.filter((book:ProductWithLikes)=>book.likes_aggregate.aggregate.count===1)
   return {
     books: data?.product,
+    favoriteBooks,
     isLoading,
     mutate,
     error
