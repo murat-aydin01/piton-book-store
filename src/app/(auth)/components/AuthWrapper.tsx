@@ -1,41 +1,50 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation"; // Changed from next/router
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { useAuth } from "../hooks/useAuth";
 import { getToken } from "../utils/authLocalStorage";
 import Loading from "./Loading";
-import { login } from "@/app/store/authSlice";
 
 const publicRoutes = ["/login", "/register"];
+
 function AuthWrapper({ children }: { children: React.ReactNode }) {
-  const dispatch = useDispatch();
-  const { isAuthenticated, loading, handleLogout, handleLoading } = useAuth();
+  const { isAuthenticated, initialized, handleLogin, handleLogout } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-
+  const isPublicRoute = publicRoutes.includes(pathname);
   useEffect(() => {
-    const token = getToken();
-
-    if (token) {
-      dispatch(login());
-
-      if (publicRoutes.includes(pathname)) {
-        router.push("/");
+    if (!initialized) {
+      const token = getToken();
+      
+      if (token) {
+        handleLogin(token);
+        if (publicRoutes.includes(pathname)) {
+          router.push("/");
+        }
+      } else {
+        handleLogout();
+        if (!publicRoutes.includes(pathname)) {
+          router.push("/login");
+        }
       }
     } else {
-      handleLogout();
-      if (!publicRoutes.includes(pathname)) {
+      if (isAuthenticated && isPublicRoute) {
+        router.push("/");
+      }
+  
+      if (!isAuthenticated && !isPublicRoute) {
         router.push("/login");
       }
     }
+  }, [pathname, router, initialized, isAuthenticated, isPublicRoute, handleLogin, handleLogout]);
 
-    handleLoading(false);
-  }, [isAuthenticated, pathname, router, dispatch, handleLogout, handleLoading]);
-
-  if (loading) return <Loading />;
-  return <>{children}</>;
+  if (!initialized) return <Loading />;
+  
+  
+  const shouldRender = (isAuthenticated && !isPublicRoute) || (!isAuthenticated && isPublicRoute);
+  
+  return shouldRender ? <>{children}</> : <Loading />;
 }
 
 export default AuthWrapper;
