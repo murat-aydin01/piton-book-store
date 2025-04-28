@@ -1,28 +1,30 @@
-import { RootState } from "@/app/store/store";
-import { useDispatch, useSelector } from "react-redux";
-import { removeToken, setToken } from "../utils/authLocalStorage";
-import { login, logout, setInitialized } from "@/app/store/authSlice";
-
+import { getToken, removeToken, setToken } from "../utils/authLocalStorage";
+import { useAuthContext } from "./useAuthContext";
 export const useAuth = () => {
-    const dispatch = useDispatch();
-    const { isAuthenticated, initialized } = useSelector((state: RootState) => state.auth);
+    const {login, logout} = useAuthContext()
 
-    const handleLogin = (token: string) => {
-        setToken(token);
-        dispatch(login());
-        dispatch(setInitialized());
+    const handleLogin = (token: string, rememberMe: boolean) => {
+        setToken(token, rememberMe);
+        login()
     }
 
     const handleLogout = () => {
         removeToken();
-        dispatch(logout());
-        dispatch(setInitialized());
+        logout()
+    }
+
+    const checkAuth = () => {
+        const token = getToken()
+        if(token) {
+            login()
+        }else{
+            logout()
+        }
     }
 
     return {
-        isAuthenticated,
-        initialized,
         handleLogin,
-        handleLogout
+        handleLogout,
+        checkAuth
     };
 }

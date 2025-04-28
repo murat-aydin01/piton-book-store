@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Manrope } from "next/font/google";
 import "./globals.css";
 import Providers from "./Providers";
+import {Toaster} from "react-hot-toast"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,7 @@ export default function RootLayout({
         className={`${manrope.className} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
+          <Toaster position="top-right" />
         {children}
         </Providers>
         

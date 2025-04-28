@@ -2,19 +2,7 @@ import axios from "axios";
 import { LoginSchema, RegisterSchema } from "../(auth)/utils/authSchema";
 import { getToken, removeToken } from "../(auth)/utils/authLocalStorage";
 
-/* 
-type LoginResponse = {
-  action_login: {
-    token: string
-  }
-}
-type RegisterResponse = {
-  action_register: {
-    token: string
-  }
-} */
-
-const apiInstance = axios.create({baseURL: "https://assign-api.piton.com.tr/api/rest"});
+const apiInstance = axios.create({baseURL: process.env.NEXT_PUBLIC_BASE_URL });
 apiInstance.interceptors.request.use(
   (config) => {
     if (!config.url?.includes('/login') && !config.url?.includes('/register')) {

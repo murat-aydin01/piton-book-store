@@ -3,17 +3,16 @@
 import React from "react";
 import { SWRConfig } from "swr";
 import { fetcher } from "./services/api";
-import { Provider } from "react-redux";
-import { store } from "./store/store";
 import AuthWrapper from "./(auth)/components/AuthWrapper";
+import AuthProvider from "./context/AuthProvider";
 
 function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <Provider store={store}>
+    <AuthProvider>
       <AuthWrapper>
         <SWRConfig value={{ fetcher }}>{children}</SWRConfig>
       </AuthWrapper>
-    </Provider>
+    </AuthProvider>
   );
 }
 
