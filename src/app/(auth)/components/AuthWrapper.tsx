@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Loading from "./Loading";
 import { getToken } from "../utils/authLocalStorage";
 import { useAuthContext } from "../hooks/useAuthContext";
+import toast from "react-hot-toast";
 
 const publicRoutes = ["/login", "/register"];
 
@@ -22,12 +23,14 @@ function AuthWrapper({ children }: { children: React.ReactNode }) {
       login();
       if (isPublicRoute) {
         router.replace("/home");
+        toast.success("Already logged in")
         return;
       }
     } else {
       logout();
       if (!isPublicRoute) {
         router.replace("/login");
+        toast.error("Must have login")
         return;
       }
     }
