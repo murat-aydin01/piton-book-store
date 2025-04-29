@@ -1,10 +1,11 @@
 "use client";
-import { Heart, LucideIcon, Menu, ShoppingCart, User } from "lucide-react";
+import { Heart, LogOut, LucideIcon, Menu, ShoppingCart, User } from "lucide-react";
 import SearchBar from "./SearchBar";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useBooks } from "@/app/services/queries";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/(auth)/hooks/useAuth";
 
 type NavItem = {
     icon: LucideIcon;
@@ -19,22 +20,34 @@ function Header() {
   const menuButtonRef = useRef<HTMLDivElement>(null);
   const {favoriteBooks} = useBooks()
   const router = useRouter()
+  const {handleLogout} = useAuth()
 
   const navItems: NavItem[] = [
-    { icon: User, label: "Profile", href: "/profile" },
-    { 
-      icon: Heart, 
-      label: "Favorites", 
-      href: "/favorites", 
-      badge: favoriteBooks?.length && favoriteBooks.length > 0 ? favoriteBooks.length : undefined
+    {
+      icon: LogOut,
+      label: "Logout",
+      href: "/logout",
     },
-    { icon: ShoppingCart, label: "Cart", href: "/cart" }
+    {
+      icon: Heart,
+      label: "Favorites",
+      href: "/favorites",
+      badge:
+        favoriteBooks?.length && favoriteBooks.length > 0
+          ? favoriteBooks.length
+          : undefined,
+    },
+    { icon: ShoppingCart, label: "Cart", href: "/cart" },
   ];
 
-  const handleRoute = (href:string) => {
-    router.push(href)
-    setIsActive(false)
-  }
+  const handleRoute = (href: string) => {
+    if (href === "/logout") {
+      handleLogout();
+    } else {
+      router.push(href);
+    }
+    setIsActive(false);
+  };
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
