@@ -1,5 +1,5 @@
 "use client";
-import { Heart, LogOut, LucideIcon, Menu, ShoppingCart, User } from "lucide-react";
+import { Heart, LogOut, LucideIcon, Menu, ShoppingCart } from "lucide-react";
 import SearchBar from "./SearchBar";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
