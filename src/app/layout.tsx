@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Manrope } from "next/font/google";
 import "./globals.css";
 import Providers from "./Providers";
-import {Toaster} from "react-hot-toast"
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 const manrope = Manrope({
-
-})
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -35,9 +35,8 @@ export default function RootLayout({
       >
         <Providers>
           <Toaster position="top-right" />
-        {children}
+          {children}
         </Providers>
-        
       </body>
     </html>
   );
